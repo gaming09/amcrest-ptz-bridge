@@ -1,6 +1,6 @@
-# Amcrest PTZ Bridge
+# Amcrest PTZ Bridge - *VibeCoded*
 
-Amcrest PTZ Bridge exposes the local Dahua DVRIP pan and tilt controls of an Amcrest SmartHome camera as a small ONVIF service that Frigate can use. Video and audio continue to flow directly between the camera and Frigate/go2rtc; this container handles movement commands only.
+Amcrest PTZ Bridge exposes the local Dahua DVRIP pan and tilt controls of an Amcrest SmartHome camera as a small ONVIF service that Frigate can use. Video and audio continue to flow directly between the camera and Frigate/go2rtc; this container handles movement commands only. I absolutely hate the amcrest smarthome app and want to use it as little as possible so i wanted all ptz controls through frigate so i vibecoded this. It doesnt reach out to the internet, it doesnt send creds anywhere.  
 
 The project is designed for one camera per container instance. Install another instance with a different name and host port for each additional camera.
 
