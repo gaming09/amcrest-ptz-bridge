@@ -112,22 +112,6 @@ docker run -d \
   ghcr.io/gaming09/amcrest-ptz-bridge:latest
 ```
 
-## Publishing
-
-This repository is configured for the `gaming09` GitHub account. Before submitting it to Community Applications:
-
-1. Create a public GitHub repository named `amcrest-ptz-bridge`.
-2. Push this repository to its `main` branch.
-3. Confirm the Validate workflow passes. The container workflow builds and publishes `ghcr.io/gaming09/amcrest-ptz-bridge`.
-4. Make the GHCR package public after its first build.
-5. Create a `v1.0.0` tag for the first versioned image.
-6. Run Validate and Scan at the [Unraid Community Apps submission portal](https://ca.unraid.net/submit).
-7. Submit after all checks pass.
-
-The repository layout and metadata follow Unraid's official Community Apps starter repository. The submission portal remains the source of truth if its requirements change.
-
-## Development
-
 ```bash
 python -m pip install -r requirements-dev.txt
 python -m unittest discover -s tests -v
