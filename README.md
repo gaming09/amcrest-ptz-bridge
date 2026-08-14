@@ -137,7 +137,9 @@ docker build -t amcrest-ptz-bridge:dev .
 
 ## Security and credentials
 
-The Unraid template masks the camera password in the form, but Docker must still retain it as container configuration and an Unraid administrator can inspect it. For file-based secret handling, set `CAMERA_PASSWORD_FILE` and mount a read-only secret file instead of using `CAMERA_PASSWORD`.
+The published app template ships with a blank camera password field and contains no developer camera address, name, username, or credential. Each installer must provide credentials for their own camera.
+
+After installation, Unraid stores the value locally in that server's per-container DockerMan template and Docker configuration so the existing container can be edited or recreated. Depending on the Unraid version, an administrator may be able to view that local value on the Edit page or through Docker inspection. It is never uploaded to this repository by the app. For file-based secret handling, set `CAMERA_PASSWORD_FILE` and mount a read-only secret file instead of using `CAMERA_PASSWORD`.
 
 The container runs as an unprivileged user, drops Linux capabilities in the Unraid template, uses a read-only root filesystem, and does not require access to Unraid shares or the Docker socket.
 

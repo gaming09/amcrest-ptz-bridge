@@ -78,6 +78,33 @@ def main() -> int:
         "camera password Config must be masked",
         errors,
     )
+    if password_nodes:
+        password_node = password_nodes[0]
+        require(
+            not (password_node.text or "").strip(),
+            "public template must not prefill a camera password",
+            errors,
+        )
+        require(
+            not password_node.get("Default", "").strip(),
+            "public template camera password Default must be empty",
+            errors,
+        )
+
+    for path in ROOT.rglob("*"):
+        if not path.is_file() or ".git" in path.parts or path.suffix in {".pyc", ".png", ".jpg"}:
+            continue
+        if path.relative_to(ROOT) in PLACEHOLDER_SOURCE_FILES:
+            continue
+        try:
+            contents = path.read_text(encoding="utf-8")
+        except UnicodeDecodeError:
+            continue
+        require(
+            "192.168." not in contents,
+            f"private LAN address found in public file {path.relative_to(ROOT)}; use an RFC 5737 documentation address",
+            errors,
+        )
 
     try:
         profile_root = ET.parse(PROFILE).getroot()
