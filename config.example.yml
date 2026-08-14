@@ -1,0 +1,27 @@
+bind: 0.0.0.0
+advertise_host: 192.0.2.10
+allowed_clients:
+  - 127.0.0.1/32
+  - 192.0.2.10/32
+
+cameras:
+  - name: patio_camera
+    model: Amcrest SmartHome PTZ
+    listen_port: 18880
+    host: 192.0.2.25
+    dvrip_port: 37777
+    username: admin
+    password_env: AMCREST_PATIO_PASSWORD
+    channel: 0
+    max_move_seconds: 1.25
+
+  # Add the second camera by copying this block and assigning a new port/password variable.
+  # - name: driveway_camera
+  #   model: Amcrest SmartHome PTZ
+  #   listen_port: 18881
+  #   host: 192.0.2.26
+  #   dvrip_port: 37777
+  #   username: admin
+  #   password_env: AMCREST_DRIVEWAY_PASSWORD
+  #   channel: 0
+  #   max_move_seconds: 1.25

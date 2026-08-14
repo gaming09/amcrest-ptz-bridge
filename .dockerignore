@@ -1,0 +1,13 @@
+.git
+.github
+__pycache__
+*.py[cod]
+.pytest_cache
+tests
+scripts
+templates
+config.example.yml
+README.md
+SECURITY.md
+SUPPORT.md
+THIRD_PARTY_NOTICES.md
