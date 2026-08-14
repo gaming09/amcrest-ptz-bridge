@@ -63,7 +63,7 @@ class EnvironmentConfigTests(unittest.TestCase):
             "CAMERA_USERNAME": "viewer",
             "CAMERA_PORT": "37778",
             "MAX_MOVE_SECONDS": "0.8",
-            "ALLOWED_CLIENTS": "192.0.2.20/32, 172.16.0.0/12",
+            "ALLOWED_CLIENTS": "192.0.2.10/32, 172.16.0.0/12",
         }
         config = config_from_env(environ)
         camera = config["cameras"][0]
@@ -75,7 +75,7 @@ class EnvironmentConfigTests(unittest.TestCase):
         self.assertEqual(camera["max_move_seconds"], 0.8)
         self.assertEqual(
             config["allowed_clients"],
-            ["192.0.2.20/32", "172.16.0.0/12"],
+            ["192.0.2.10/32", "172.16.0.0/12"],
         )
 
     def test_password_file_takes_precedence(self):

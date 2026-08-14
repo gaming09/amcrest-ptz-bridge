@@ -24,7 +24,7 @@
 
   <Config Name="ONVIF host port" Target="18880" Default="18880" Mode="tcp" Description="Port Frigate uses to reach this camera's ONVIF PTZ facade. Use a unique host port for each installed camera." Type="Port" Display="always" Required="true" Mask="false">18880</Config>
   <Config Name="Camera name" Target="CAMERA_NAME" Default="amcrest-camera" Description="Friendly name reported by the ONVIF service." Type="Variable" Display="always" Required="true" Mask="false">amcrest-camera</Config>
-  <Config Name="Camera IP or hostname" Target="CAMERA_HOST" Default="" Description="LAN address of the Amcrest camera, for example 192.0.2.25." Type="Variable" Display="always" Required="true" Mask="false"></Config>
+  <Config Name="Camera IP or hostname" Target="CAMERA_HOST" Default="" Description="LAN address of the Amcrest camera, for example 192.0.2.25 (replace this documentation-only address)." Type="Variable" Display="always" Required="true" Mask="false"></Config>
   <Config Name="Camera username" Target="CAMERA_USERNAME" Default="admin" Description="Local camera account with PTZ permission." Type="Variable" Display="always" Required="true" Mask="false">admin</Config>
   <Config Name="Camera password" Target="CAMERA_PASSWORD" Default="" Description="Local camera password. This is masked in the Unraid form but remains available to Docker as a container environment value." Type="Variable" Display="always" Required="true" Mask="true"></Config>
   <Config Name="Camera DVRIP port" Target="CAMERA_PORT" Default="37777" Description="Local Dahua DVRIP service port. Most Amcrest SmartHome cameras use 37777." Type="Variable" Display="advanced" Required="true" Mask="false">37777</Config>

@@ -33,17 +33,37 @@ Configure:
 
 For a second camera, install a second instance and use port `18881`, then `18882`, and so on.
 
-### Frigate example
+## Connect the bridge to Frigate
+
+The bridge does not replace the camera's existing `ffmpeg` or go2rtc stream configuration. It adds the ONVIF endpoint that Frigate uses for the PTZ buttons.
+
+1. In Frigate, open **Settings > Configuration Editor**. If you edit the file directly, use `config.yml` in the host directory mapped to Frigate's `/config` directory (commonly `/mnt/user/appdata/frigate/config.yml` on Unraid).
+2. Find the existing camera under the top-level `cameras:` section.
+3. Add `onvif:` inside that camera, at the same indentation level as `ffmpeg:`, `detect:`, `objects:`, and `zones:`. Do not add a second copy of the camera name and do not put `onvif:` inside `ffmpeg:`.
+4. Set `host` to the Unraid server's LAN address, not the camera's address. Set `port` to the **ONVIF host port** chosen for this bridge container.
+
+The following example uses the documentation-only address `192.0.2.10`; replace it with your Unraid server address. Keep the camera's existing stream and detection keys unchanged.
 
 ```yaml
 cameras:
-  living_room:
+  patio_camera:
+    # Existing ffmpeg, detect, objects, zones, and other settings stay here.
+
+    # Add this block to this existing camera definition.
     onvif:
-      host: 192.0.2.20
-      port: 18880
+      host: 192.0.2.10  # Replace with the Unraid server LAN address.
+      port: 18880       # Match this bridge instance's ONVIF host port.
+      user: ""
+      password: ""
 ```
 
-Replace the host with the Unraid server address and the port with the host port selected in the app template.
+The bridge does not require ONVIF authentication, but Frigate may require the explicit empty `user` and `password` values. Validate the configuration, then use **Save & Restart**. Open that camera's Live page after Frigate restarts; the PTZ controls should be available there.
+
+For additional cameras, install one bridge instance per camera and assign each instance a unique host port (`18880`, `18881`, and so on). Add the corresponding `onvif:` block under each Frigate camera. Do not point Frigate at the camera's DVRIP port `37777`; that connection is made privately by the bridge.
+
+If the controls do not appear, open `http://UNRAID_SERVER_IP:ONVIF_HOST_PORT/health` from your LAN and confirm that it reports healthy, then check the Frigate logs for ONVIF connection errors. This bridge implements basic continuous pan/tilt and stop commands; it does not add optical zoom, presets, or Frigate autotracking support.
+
+For Frigate's complete ONVIF settings, see the [official camera configuration documentation](https://docs.frigate.video/configuration/cameras/#setting-up-camera-ptz-controls).
 
 ## Configuration
 
