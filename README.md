@@ -22,16 +22,25 @@ Every movement has a configurable fail-safe timer, so the bridge stops the camer
 
 ## Unraid installation
 
-After this repository and its GHCR package are public, search for **Amcrest PTZ Bridge** in Community Applications. Until the app is accepted, install the raw template URL through Unraid Docker authoring mode.
+Search for **Amcrest PTZ Bridge** in Unraid Community Applications and install it from the app listing.
 
 Configure:
 
 - a unique ONVIF host port, beginning with `18880`;
 - the camera's LAN IP address;
-- a local camera username and password;
+- a local camera username and either a password or the optional secret-file settings;
 - optional movement timeout and client allowlist settings.
 
 For a second camera, install a second instance and use port `18881`, then `18882`, and so on.
+
+### Password choices
+
+The App Store form includes both supported credential methods; you do not need to use **Add another Path, Port, Variable, Label or Device**.
+
+- **Standard:** enter **Camera password** and leave both advanced secret-file fields blank.
+- **Secret file:** create a host file containing only the camera password, leave **Camera password** blank, select that file in **Camera password secret file**, and set **Camera password file** to `/run/secrets/camera_password`. The host file must be readable by container user `10001`; restrict it to that user where your storage permissions allow.
+
+Both secret-file settings are optional and blank in the published template. The template never contains a camera address, username, password, or a developer-specific host path.
 
 ## Connect the bridge to Frigate
 
@@ -71,7 +80,7 @@ For Frigate's complete ONVIF settings, see the [official camera configuration do
 |---|---:|---|
 | `CAMERA_HOST` | required | Camera LAN IP address or hostname |
 | `CAMERA_USERNAME` | `admin` | Local camera account |
-| `CAMERA_PASSWORD` | required | Local camera password |
+| `CAMERA_PASSWORD` | empty | Local camera password; required unless `CAMERA_PASSWORD_FILE` is used |
 | `CAMERA_PASSWORD_FILE` | empty | Optional file containing the password; takes precedence over `CAMERA_PASSWORD` |
 | `CAMERA_NAME` | `amcrest-camera` | ONVIF device/profile name |
 | `CAMERA_MODEL` | `Amcrest SmartHome PTZ` | Model string reported through ONVIF |
@@ -123,7 +132,9 @@ docker build -t amcrest-ptz-bridge:dev .
 
 The published app template ships with a blank camera password field and contains no developer camera address, name, username, or credential. Each installer must provide credentials for their own camera.
 
-After installation, Unraid stores the value locally in that server's per-container DockerMan template and Docker configuration so the existing container can be edited or recreated. Depending on the Unraid version, an administrator may be able to view that local value on the Edit page or through Docker inspection. It is never uploaded to this repository by the app. For file-based secret handling, set `CAMERA_PASSWORD_FILE` and mount a read-only secret file instead of using `CAMERA_PASSWORD`.
+After installation, Unraid stores a standard password locally in that server's per-container DockerMan template and Docker configuration so the existing container can be edited or recreated. Depending on the Unraid version, an administrator may be able to view that local value on the Edit page or through Docker inspection. It is never uploaded to this repository by the app.
+
+For file-based secret handling, use the built-in advanced **Camera password secret file** and **Camera password file** fields described above. The bridge reads the file at runtime, and the real password does not need to be stored in a Docker environment variable.
 
 The container runs as an unprivileged user, drops Linux capabilities in the Unraid template, uses a read-only root filesystem, and does not require access to Unraid shares or the Docker socket.
 

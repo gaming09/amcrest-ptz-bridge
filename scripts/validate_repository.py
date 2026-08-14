@@ -71,7 +71,14 @@ def main() -> int:
     configs = template_root.findall("Config")
     targets = [config.get("Target", "") for config in configs]
     require(len(targets) == len(set(targets)), "Config Target values must be unique", errors)
-    for target in ("18880", "CAMERA_HOST", "CAMERA_USERNAME", "CAMERA_PASSWORD"):
+    for target in (
+        "18880",
+        "CAMERA_HOST",
+        "CAMERA_USERNAME",
+        "CAMERA_PASSWORD",
+        "/run/secrets/camera_password",
+        "CAMERA_PASSWORD_FILE",
+    ):
         require(target in targets, f"template is missing Config target {target}", errors)
     password_nodes = [node for node in configs if node.get("Target") == "CAMERA_PASSWORD"]
     require(
@@ -91,6 +98,26 @@ def main() -> int:
             "public template camera password Default must be empty",
             errors,
         )
+        require(
+            password_node.get("Required") == "false",
+            "camera password must be optional when secret-file authentication is available",
+            errors,
+        )
+
+    for secret_target in ("/run/secrets/camera_password", "CAMERA_PASSWORD_FILE"):
+        secret_nodes = [node for node in configs if node.get("Target") == secret_target]
+        if secret_nodes:
+            secret_node = secret_nodes[0]
+            require(
+                not (secret_node.text or "").strip(),
+                f"public template must not prefill {secret_target}",
+                errors,
+            )
+            require(
+                not secret_node.get("Default", "").strip(),
+                f"public template Default for {secret_target} must be empty",
+                errors,
+            )
 
     for path in ROOT.rglob("*"):
         if not path.is_file() or ".git" in path.parts or path.suffix in {".pyc", ".png", ".jpg"}:

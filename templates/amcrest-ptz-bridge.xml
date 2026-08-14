@@ -31,15 +31,17 @@ cameras:&#xD;
   <ExtraParams>--read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cap-drop=ALL --security-opt=no-new-privileges:true</ExtraParams>
   <ExtraSearchTerms>amcrest dahua dvrip frigate onvif camera pan tilt ptz</ExtraSearchTerms>
   <Requires>An Amcrest SmartHome PTZ camera reachable from Unraid over local TCP port 37777. Configure one container instance per camera and assign each instance a unique host port.</Requires>
-  <Changes>2026-08-13: Initial Community Applications release.</Changes>
-  <Date>2026-08-13</Date>
+  <Changes>2026-08-14: Added built-in optional secret-file settings so credentials can be kept out of Docker environment values.&#10;2026-08-13: Initial Community Applications release.</Changes>
+  <Date>2026-08-14</Date>
   <License>MIT</License>
 
   <Config Name="ONVIF host port" Target="18880" Default="18880" Mode="tcp" Description="Port Frigate uses to reach this camera's ONVIF PTZ facade. Use a unique host port for each installed camera." Type="Port" Display="always" Required="true" Mask="false">18880</Config>
   <Config Name="Camera name" Target="CAMERA_NAME" Default="amcrest-camera" Description="Friendly name reported by the ONVIF service." Type="Variable" Display="always" Required="true" Mask="false">amcrest-camera</Config>
   <Config Name="Camera IP or hostname" Target="CAMERA_HOST" Default="" Description="LAN address of the Amcrest camera, for example 192.0.2.25 (replace this documentation-only address)." Type="Variable" Display="always" Required="true" Mask="false"></Config>
   <Config Name="Camera username" Target="CAMERA_USERNAME" Default="admin" Description="Local camera account with PTZ permission." Type="Variable" Display="always" Required="true" Mask="false">admin</Config>
-  <Config Name="Camera password" Target="CAMERA_PASSWORD" Default="" Description="Local camera password. This is masked in the Unraid form but remains available to Docker as a container environment value." Type="Variable" Display="always" Required="true" Mask="true"></Config>
+  <Config Name="Camera password" Target="CAMERA_PASSWORD" Default="" Description="Local camera password. Leave blank when using the optional secret-file settings below. This is masked in the form but remains available to Docker as an environment value." Type="Variable" Display="always" Required="false" Mask="true"></Config>
+  <Config Name="Camera password secret file" Target="/run/secrets/camera_password" Default="" Description="Optional host file containing only the camera password. When used, choose the host file here and set Camera password file to /run/secrets/camera_password. Leave blank to use Camera password." Type="Path" Display="advanced" Required="false" Mask="false"></Config>
+  <Config Name="Camera password file" Target="CAMERA_PASSWORD_FILE" Default="" Description="Optional container path for the mounted password file. Set to /run/secrets/camera_password when using Camera password secret file; otherwise leave blank." Type="Variable" Display="advanced" Required="false" Mask="false"></Config>
   <Config Name="Camera DVRIP port" Target="CAMERA_PORT" Default="37777" Description="Local Dahua DVRIP service port. Most Amcrest SmartHome cameras use 37777." Type="Variable" Display="advanced" Required="true" Mask="false">37777</Config>
   <Config Name="Camera model" Target="CAMERA_MODEL" Default="Amcrest SmartHome PTZ" Description="Model label reported to ONVIF clients." Type="Variable" Display="advanced" Required="false" Mask="false">Amcrest SmartHome PTZ</Config>
   <Config Name="Camera channel" Target="CAMERA_CHANNEL" Default="0" Description="DVRIP camera channel. Standalone cameras normally use channel 0." Type="Variable" Display="advanced" Required="true" Mask="false">0</Config>
