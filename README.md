@@ -90,7 +90,7 @@ Set `BRIDGE_CONFIG=/config/config.yml` and mount a YAML file to use the original
 
 ## Network and internet access
 
-At runtime the application listens for ONVIF requests, connects to the configured camera over local TCP port `37777`, and checks its own localhost health endpoint. It contains no update checker, telemetry, advertising, or cloud integration.
+At runtime the application listens for ONVIF requests, connects to the configured camera over local TCP port `37777`, and checks its own localhost health endpoint. It contains no telemetry, advertising, or cloud integration. The image explicitly disables the optional update checker inherited from the pwntools dependency, so it does not perform a runtime version check.
 
 Building or updating the image requires internet access to pull the Python base image, download the pinned MIT-licensed DahuaConsole source, and install Python dependencies. Unraid also contacts GHCR to pull images and check for updates. Docker bridge networking technically permits outbound internet access unless the administrator adds an egress firewall rule.
 

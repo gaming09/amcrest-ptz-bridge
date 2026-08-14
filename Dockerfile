@@ -31,6 +31,7 @@ RUN pip install --no-cache-dir -r /opt/dahua/requirements.txt PyYAML==6.0.2 \
 
 WORKDIR /app
 COPY bridge.py /app/bridge.py
+COPY pwn.conf /etc/pwn.conf
 
 ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \

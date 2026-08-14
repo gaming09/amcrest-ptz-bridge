@@ -45,6 +45,7 @@ def main() -> int:
         ROOT / "icon.png",
         ROOT / "ca_profile.xml",
         ROOT / "Dockerfile",
+        ROOT / "pwn.conf",
         TEMPLATE,
     ):
         require(required.is_file(), f"missing required file: {required.relative_to(ROOT)}", errors)
@@ -115,8 +116,17 @@ def main() -> int:
     require(bool(text_of(profile_root, "Profile")), "ca_profile.xml requires a non-empty Profile", errors)
 
     dockerfile = (ROOT / "Dockerfile").read_text(encoding="utf-8")
-    for instruction in ("USER 10001:10001", "HEALTHCHECK", "DAHUA_CONSOLE_COMMIT"):
+    for instruction in (
+        "USER 10001:10001",
+        "HEALTHCHECK",
+        "DAHUA_CONSOLE_COMMIT",
+        "COPY pwn.conf /etc/pwn.conf",
+    ):
         require(instruction in dockerfile, f"Dockerfile is missing {instruction}", errors)
+
+    pwn_config = (ROOT / "pwn.conf").read_text(encoding="utf-8")
+    require("[update]" in pwn_config, "pwn.conf must configure the update section", errors)
+    require("interval=never" in pwn_config, "pwn.conf must disable pwntools update checks", errors)
 
     date = text_of(template_root, "Date")
     require(bool(re.fullmatch(r"\d{4}-\d{2}-\d{2}", date)), "template Date must be YYYY-MM-DD", errors)
