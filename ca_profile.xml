@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <CommunityApplications>
   <Profile>Amcrest PTZ Bridge provides locally controlled ONVIF pan and tilt facades for Amcrest SmartHome cameras that expose PTZ through the Dahua DVRIP protocol. It is designed for Frigate installations and does not proxy video or require a cloud service.</Profile>
-  <Icon>https://raw.githubusercontent.com/gaming09/amcrest-ptz-bridge/main/icon.svg</Icon>
+  <Icon>https://raw.githubusercontent.com/gaming09/amcrest-ptz-bridge/main/icon.png</Icon>
   <WebPage>https://github.com/gaming09/amcrest-ptz-bridge</WebPage>
   <Forum>https://github.com/gaming09/amcrest-ptz-bridge/issues</Forum>
 </CommunityApplications>

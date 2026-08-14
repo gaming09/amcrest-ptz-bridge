@@ -13,7 +13,7 @@
   <Category>HomeAutomation: Security:</Category>
   <WebUI>http://[IP]:[PORT:18880]/health</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/gaming09/amcrest-ptz-bridge/main/templates/amcrest-ptz-bridge.xml</TemplateURL>
-  <Icon>https://raw.githubusercontent.com/gaming09/amcrest-ptz-bridge/main/icon.svg</Icon>
+  <Icon>https://raw.githubusercontent.com/gaming09/amcrest-ptz-bridge/main/icon.png</Icon>
   <ReadMe>https://raw.githubusercontent.com/gaming09/amcrest-ptz-bridge/main/README.md</ReadMe>
   <ExtraParams>--read-only --tmpfs /tmp:rw,noexec,nosuid,size=16m --cap-drop=ALL --security-opt=no-new-privileges:true</ExtraParams>
   <ExtraSearchTerms>amcrest dahua dvrip frigate onvif camera pan tilt ptz</ExtraSearchTerms>

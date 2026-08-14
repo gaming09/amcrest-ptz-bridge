@@ -42,7 +42,7 @@ def main() -> int:
     for required in (
         ROOT / "README.md",
         ROOT / "LICENSE",
-        ROOT / "icon.svg",
+        ROOT / "icon.png",
         ROOT / "ca_profile.xml",
         ROOT / "Dockerfile",
         TEMPLATE,
