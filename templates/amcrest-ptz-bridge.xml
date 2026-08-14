@@ -9,7 +9,20 @@
   <Privileged>false</Privileged>
   <Support>https://github.com/gaming09/amcrest-ptz-bridge/issues</Support>
   <Project>https://github.com/gaming09/amcrest-ptz-bridge</Project>
-  <Overview>Expose the local DVRIP pan and tilt controls of an Amcrest SmartHome camera as an ONVIF PTZ service for Frigate. Video and audio remain direct between the camera and Frigate; this bridge handles movement commands only.</Overview>
+  <Overview>Expose the local DVRIP pan and tilt controls of an Amcrest SmartHome camera as an ONVIF PTZ service for Frigate. Video and audio remain direct between the camera and Frigate; this bridge handles movement commands only.&#xD;
+&#xD;
+Frigate configuration (add this block to the existing camera definition):&#xD;
+&#xD;
+cameras:&#xD;
+  patio_camera:&#xD;
+    # Existing ffmpeg, detect, objects, zones, and other settings stay here.&#xD;
+&#xD;
+    # Add this block to this existing camera definition.&#xD;
+    onvif:&#xD;
+      host: 192.0.2.10  # Replace with the Unraid server LAN address.&#xD;
+      port: 18880       # Match this bridge instance's ONVIF host port.&#xD;
+      user: ""&#xD;
+      password: ""</Overview>
   <Category>HomeAutomation: Security:</Category>
   <WebUI>http://[IP]:[PORT:18880]/health</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/gaming09/amcrest-ptz-bridge/main/templates/amcrest-ptz-bridge.xml</TemplateURL>
