@@ -39,7 +39,7 @@ For a second camera, install a second instance and use port `18881`, then `18882
 cameras:
   living_room:
     onvif:
-      host: 192.0.2.10
+      host: 192.0.2.20
       port: 18880
 ```
 
